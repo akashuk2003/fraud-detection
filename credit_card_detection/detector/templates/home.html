@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fraud Detection Dashboard</title>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            margin: 0;
+            padding: 30px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+        }
+        button {
+            background: #2b7cff;
+            color: white;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .status {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .fraud { color: red; }
+        .safe { color: green; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.06);
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>💳 Credit Card Fraud Detection Dashboard</h2>
+
+<div class="stats">
+    <div class="stat-box">
+        <h3>Transaction</h3>
+        <p>Live Analysis</p>
+    </div>
+    <div class="stat-box">
+        <h3>Model</h3>
+        <p>ML Classifier</p>
+    </div>
+    <div class="stat-box">
+        <h3>Status</h3>
+        <p>Real-Time</p>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- LEFT: FORM -->
+    <div class="card">
+        <h3>Enter Transaction Details</h3>
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Amount (₹)</label>
+            <input type="number" name="amount" required>
+
+            <label>Hour (0–23)</label>
+            <input type="number" name="hour" min="0" max="23" required>
+
+            <label>Transaction Type</label>
+            <select name="type">
+                <option value="0">Offline</option>
+                <option value="1">Online</option>
+            </select>
+
+            <label>Merchant Category</label>
+            <select name="merchant">
+                <option value="0">Grocery</option>
+                <option value="1">Electronics</option>
+                <option value="2">Travel</option>
+                <option value="3">Others</option>
+            </select>
+
+            <label>Location</label>
+            <select name="location">
+                <option value="0">Same City</option>
+                <option value="1">Different City</option>
+            </select>
+
+            <label>Recent Transaction Count</label>
+            <input type="number" name="freq" required>
+
+            <button type="submit">Analyze Transaction</button>
+        </form>
+
+        {% if result %}
+            <div class="status {% if result == 'FRAUD' %}fraud{% else %}safe{% endif %}">
+                Result: {{ result }}
+            </div>
+            <p>Risk Score: {{ score }}</p>
+        {% endif %}
+    </div>
+
+    <!-- RIGHT: CHARTS -->
+    <div class="card">
+        <h3>Fraud Risk Analysis</h3>
+
+        <canvas id="riskChart"></canvas>
+        <canvas id="trendChart"></canvas>
+    </div>
+
+</div>
+
+<script>
+    {% if score %}
+    const riskScore = {{ score }};
+
+    // Bar Chart – Risk Factors
+    new Chart(document.getElementById('riskChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Amount', 'Time', 'Type', 'Merchant', 'Location', 'Frequency'],
+            datasets: [{
+                label: 'Risk Contribution',
+                data: [
+                    riskScore * 100,
+                    40,
+                    55,
+                    60,
+                    50,
+                    65
+                ],
+                backgroundColor: '#ff6384'
+            }]
+        }
+    });
+
+    // Line Chart – Transaction Trend (simulated)
+    new Chart(document.getElementById('trendChart'), {
+        type: 'line',
+        data: {
+            labels: ['T-5', 'T-4', 'T-3', 'T-2', 'T-1', 'Now'],
+            datasets: [{
+                label: 'Transaction Risk Trend',
+                data: [10, 20, 25, 40, 50, riskScore * 100],
+                borderColor: '#36a2eb',
+                fill: false
+            }]
+        }
+    });
+    {% endif %}
+</script>
+
+</body>
+</html>
