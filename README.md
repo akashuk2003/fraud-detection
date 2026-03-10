@@ -146,16 +146,7 @@ After activation, your terminal should show:
 (venv)
 4️⃣ Install Dependencies
 pip install django pandas scikit-learn numpy joblib
-5️⃣ Train the Machine Learning Model
 
-Run the training script:
-
-python detector/train_model.py
-
-This generates:
-
-fraud_model.pkl
-scaler.pkl
 6️⃣ Run the Django Server
 python manage.py migrate
 python manage.py runserver
@@ -163,6 +154,7 @@ python manage.py runserver
 Open in browser:
 
 http://localhost:8000
+
 ✨ Application Features
 
 Machine learning fraud prediction
