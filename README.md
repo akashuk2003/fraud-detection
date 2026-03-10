@@ -155,7 +155,7 @@ Open in browser:
 
 http://localhost:8000
 
-✨ Application Features
+## Application Features
 
 Machine learning fraud prediction
 
