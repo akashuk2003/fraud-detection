@@ -133,20 +133,29 @@ cd credit_card_detection
 Create a Python virtual environment to isolate dependencies.
 
 python -m venv venv
+
 3️⃣ Activate Virtual Environment
+
 Windows
+
 venv\Scripts\activate
+
 macOS / Linux
+
 source venv/bin/activate
 
 After activation, your terminal should show:
 
 (venv)
+
 4️⃣ Install Dependencies
+
 pip install django pandas scikit-learn numpy joblib
 
 6️⃣ Run the Django Server
+
 python manage.py migrate
+
 python manage.py runserver
 
 Open in browser:
