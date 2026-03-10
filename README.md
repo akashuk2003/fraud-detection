@@ -77,17 +77,13 @@ CSS
 
 Chart.js (data visualization)
 
-Development Environment
-
-GitHub Codespaces
-
 Python Virtual Environment
 
 🤖 Machine Learning Model
 
 The system uses Logistic Regression, a widely used classification algorithm for fraud detection.
 
-Training Process
+## Training Process
 
 Load dataset (creditcard.csv)
 
@@ -110,7 +106,7 @@ scaler.pkl
 
 These files are later loaded by Django for real-time fraud prediction.
 
-⚙️ System Workflow
+## System Workflow
 Historical Transaction Dataset
             ↓
       Data Preprocessing
@@ -126,9 +122,11 @@ Historical Transaction Dataset
      Fraud Probability Prediction
             ↓
      Dashboard Visualization
-🚀 Installation & Setup
+## Installation & Setup
+
 1️⃣ Clone the Repository
 git clone
+
 cd credit_card_detection
 2️⃣ Create Virtual Environment
 
@@ -169,7 +167,7 @@ Transaction simulation input
 
 Real-time prediction results
 
-🧪 Test Examples
+## Test Examples
 
 Use the following inputs to test the system.
 
